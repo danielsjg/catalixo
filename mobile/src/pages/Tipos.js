@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Button, AsyncStorage, Image, StyleSheet } from 'react-native';
 
 import lixo from '../assets/lixo.png';
-import { NavigationEvents } from 'react-navigation';
 
 export default function Tipos({ navigation }) {
 
-    const [localizacao, setLocalizacao] = useState([]);
     const [tipo, setTipo] = useState('');
 
-    useEffect(() => {
-        AsyncStorage.getItem('localizacao').then(storageLocalizacao => {
-            const localizacaoArray = storageLocalizacao.split(',').map(localizacao => localizacao.trim());
-            setLocalizacao(localizacaoArray);
-        })
-    }, []);
-
-    
     async function handleSubmit(tipo) {
         await AsyncStorage.setItem('tipo', tipo);
         navigation.navigate('Resultado');

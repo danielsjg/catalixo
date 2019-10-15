@@ -1,24 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, AsyncStorage, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import api from '../services/api';
-import { bold } from 'ansi-colors';
-import { FlatList } from 'react-native-gesture-handler';
 
-export default function Deposito({ tipo }) {
+export default function Deposito( { tipo }) {
 
     const [deposito, setDeposito] = useState([]);
 
+    var p1 = tipo.split(',').map(string => string.trim())[0];
+    var p2 = tipo.split(',').map(string => string.trim())[2];
+    var p3 = tipo.split(',').map(string => string.trim())[3];
+
     useEffect(() => {
-        async function loadDepositos() {
+        async function loadDepositos() {   
             const response = await api.get('/deposito', {
-                params: { tipo }
+                params: { tipo: p1,
+                          lat: p2,
+                          long: p3
+                        }
             });
             setDeposito(response.data);
         }
         loadDepositos();
     }, []);
-
-    console.log(deposito);
 
     return (<View>
         <FlatList

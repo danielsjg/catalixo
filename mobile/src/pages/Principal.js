@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, AsyncStorage, TextInput, Button, Image, StyleSheet } from 'react-native';
-import api from '../services/api';
 
 import lixo from '../assets/lixo.png';
-import { NavigationEvents } from 'react-navigation';
 
 export default function Principal({ navigation }) {
     const [localizacao, setLocalizacao] = useState('');
 
-    async function todos() {
-        await AsyncStorage.setItem('localizacao', '');
-        handleSubmit();
-    }
-
-    async function handleSubmit() {
-
-        await AsyncStorage.setItem('localizacao', localizacao);
-        
+    async function handleSubmit(loc) {
+        if (localizacao) {
+            await AsyncStorage.setItem('localizacao', localizacao);
+        } else {
+            await AsyncStorage.setItem('localizacao', loc);
+        }
         navigation.navigate('Tipos');
     }
 
@@ -41,7 +36,7 @@ export default function Principal({ navigation }) {
         <View style={styles.box}>
             <Text style={styles.label}>Listar Todos Depósitos</Text>
             <Button title="Depósitos"
-            onPress={handleSubmit}/>
+            onPress={() => handleSubmit('0, 0')}/>
         </View>
     </View>
 }
