@@ -1,4 +1,4 @@
-# Processo Seletivo Estágio
+# Processo Seletivo - Estágio
 Supera Tecnologia - https://www.supera.com.br/
 
 # Projeto Cata Lixo
