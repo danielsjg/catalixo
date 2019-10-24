@@ -1,35 +1,26 @@
-import React, { useState, useEffect} from 'react';
-import { View, Text, AsyncStorage, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
-import Deposito from '../components/Deposito';
+import Depositos from '../components/Depositos';
 import lixo from '../assets/lixo.png';
 
-export default function Resultado({}) {
+export default function Resultado({ navigation }) {
 
-    var [tipo, setTipo] = useState([]);
-    var [localizacao, setLocalizacao] = useState('');
+    var localizacao = navigation.getParam('params').localizacao;
+    var tipo = navigation.getParam('params').tipo;
 
-    useEffect(() => {
-        AsyncStorage.getItem('tipo').then(storageTipo => {
-            const tipoArray = storageTipo.split(',');
-            setTipo(tipoArray);
-        })
-        AsyncStorage.getItem('localizacao').then(storageLocalizacao => {
-            setLocalizacao(storageLocalizacao);
-        })
-        
-    }, []);
-    
-    var showTipo = '';
-    switch(tipo[0]) {
-        case 'pilhasebaterias,': showTipo = 'Pilhas e Baterias'; break;
-        case 'lampadas,': showTipo = 'Lâmpadas'; break;
-        case 'pneus,': showTipo = 'Pneus'; break;
-        case 'oleos,': showTipo = 'Óleos'; break;
-        case 'eletronicos,': showTipo = 'Aparelhos Eletrônicos'; break;
+    function handleSubmit() {
+        navigation.navigate('Principal');
     }
 
-    tipo[0] += ',' + localizacao;
+    var showTipo = '';
+    switch(tipo) {
+        case 'pilhasebaterias': showTipo = 'Pilhas e Baterias'; break;
+        case 'lampadas': showTipo = 'Lâmpadas'; break;
+        case 'pneus': showTipo = 'Pneus'; break;
+        case 'oleos': showTipo = 'Óleos'; break;
+        case 'eletronicos': showTipo = 'Aparelhos Eletrônicos'; break;
+    }
 
     return <View style={styles.fundo}>
         <View style={styles.centro}>
@@ -37,7 +28,7 @@ export default function Resultado({}) {
         </View>
         <Text style={styles.titulo}>Depósitos de {showTipo}</Text>
         <View style={styles.espaco}>
-        {tipo.map( tipo => <Deposito key={tipo} tipo={tipo}/>)}
+        <Depositos navigation={navigation}/>
         </View>
     </View>
 }

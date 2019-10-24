@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { View, Button, AsyncStorage, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Button, Image, StyleSheet } from 'react-native';
 
 import lixo from '../assets/lixo.png';
 
 export default function Tipos({ navigation }) {
 
-    const [tipo, setTipo] = useState('');
+    var localizacao = navigation.getParam('localizacao');
 
     async function handleSubmit(tipo) {
-        await AsyncStorage.setItem('tipo', tipo);
-        navigation.navigate('Resultado');
+        var params = { localizacao, tipo }
+        navigation.navigate('Resultado', { params });
     }
 
     return <View style={styles.fundo}>

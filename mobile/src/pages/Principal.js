@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, AsyncStorage, TextInput, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
 
 import lixo from '../assets/lixo.png';
 
 export default function Principal({ navigation }) {
-    const [localizacao, setLocalizacao] = useState('');
+    var [localizacao, setLocalizacao] = useState('');
+
+    var myLoc = loc => {
+        loc = loc.coords.latitude + ', ' + loc.coords.longitude;
+        handleSubmit(loc);
+    }
 
     async function handleSubmit(loc) {
-        if (localizacao) {
-            await AsyncStorage.setItem('localizacao', localizacao);
-        } else {
-            await AsyncStorage.setItem('localizacao', loc);
+        if(localizacao) {
+            loc = localizacao
         }
-        navigation.navigate('Tipos');
+        navigation.navigate('Tipos', { localizacao: loc });
     }
 
     return <View style={styles.fundo}>
@@ -31,7 +34,7 @@ export default function Principal({ navigation }) {
         <View style={styles.box}>
             <Text style={styles.label}>Utilizar GPS</Text>
             <Button title="Localização"
-            onPress={handleSubmit}/>
+            onPress={() => navigator.geolocation.getCurrentPosition(myLoc)}/>
         </View>
         <View style={styles.box}>
             <Text style={styles.label}>Listar Todos Depósitos</Text>
