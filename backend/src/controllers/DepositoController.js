@@ -23,12 +23,12 @@ module.exports = {
 
     async index(req, res) {
         var { tipo } = req.query;
-        var { lat } = req.query;
-        var { long } = req.query;
+        var { latitude } = req.query;
+        var { longitude } = req.query;
         
         var depositos = await Deposito.find({ tipos: tipo });
 
-        depositos = validar(depositos, lat, long);
+        depositos = validar(depositos, latitude, longitude);
 
         return res.json(depositos);
     },

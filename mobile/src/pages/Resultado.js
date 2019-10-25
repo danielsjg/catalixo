@@ -6,7 +6,6 @@ import lixo from '../assets/lixo.png';
 
 export default function Resultado({ navigation }) {
 
-    var localizacao = navigation.getParam('params').localizacao;
     var tipo = navigation.getParam('params').tipo;
 
     function handleSubmit() {

@@ -10,6 +10,8 @@ export default function Depositos({ navigation }) {
     var localizacao = navigation.getParam('params').localizacao;
     var tipo = navigation.getParam('params').tipo;
 
+    console.log(localizacao);
+
     useEffect(() => {
         async function loadDepositos(localizacao, tipo) {   
             var lat = localizacao.split(',').map(string => string.trim())[0];
@@ -17,8 +19,8 @@ export default function Depositos({ navigation }) {
             var response = await api.get('/deposito', {
                 params: {
                     tipo: tipo,
-                    lat: lat,
-                    long: long
+                    latitude: lat,
+                    longitude: long
                 }
             });
             setDepositos(response.data);
