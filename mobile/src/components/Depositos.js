@@ -10,8 +10,6 @@ export default function Depositos({ navigation }) {
     var localizacao = navigation.getParam('params').localizacao;
     var tipo = navigation.getParam('params').tipo;
 
-    console.log(localizacao);
-
     useEffect(() => {
         async function loadDepositos(localizacao, tipo) {   
             var lat = localizacao.split(',').map(string => string.trim())[0];
@@ -26,7 +24,7 @@ export default function Depositos({ navigation }) {
             setDepositos(response.data);
         }
         loadDepositos(localizacao, tipo);
-    });
+    }, [tipo]);
 
     
     return (<View>
